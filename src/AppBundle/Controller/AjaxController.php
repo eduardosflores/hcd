@@ -878,6 +878,22 @@ class AjaxController extends Controller
      */
     public function getSesionAction(Request $request, Sesion $sesion)
     {
+
+    	if ($sesion->getAsuntosEntrados()){
+		    return JsonResponse::create([
+			    'sesion' => [
+				    'id' => $sesion->getId(),
+				    'fecha' => $sesion->getFecha()->format('Y-m-d H:i:s'),
+				    'titulo' => $sesion->getTitulo(),
+				    'asuntosEntrados' => $sesion->getAsuntosEntrados(),
+				    'tipoSesion' => $sesion->getTipoSesion()->getValor(),
+				    'proyectos' => [],
+				    'dictamenes' => [],
+				    'acta' => $sesion->getActa(),
+			    ]
+		    ]);
+	    }
+
         /** @var BoletinAsuntoEntrado $bae */
         $bae = $sesion->getBae()->first();
         /** @var OrdenDelDia $od */

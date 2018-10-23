@@ -26,15 +26,15 @@
                                     <i class="fa fa-search" aria-hidden="true"></i>
                                     Consultar Expte
                                 </button>
-                                <button type="button" class="btn btn-app btn-primary-hcd"
-                                        @click="verOd">
-                                    <i class="fa fa-file-o" aria-hidden="true"></i>
-                                    OD
-                                </button>
+                                <!--<button type="button" class="btn btn-app btn-primary-hcd"-->
+                                        <!--@click="verOd">-->
+                                    <!--<i class="fa fa-file-o" aria-hidden="true"></i>-->
+                                    <!--OD-->
+                                <!--</button>-->
                                 <button type="button" class="btn btn-app btn-primary-hcd"
                                         @click="verCartaOrganica">
                                     <i class="fa fa-file-o" aria-hidden="true"></i>
-                                    Carga Orgánica
+                                    Estatuto
                                 </button>
                                 <button type="button" class="btn btn-app btn-primary-hcd"
                                         @click="verActas">

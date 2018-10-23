@@ -33,7 +33,7 @@ class SesionController extends Controller {
 	public function indexAction() {
 
 		$personaUsuario = $this->getUser()->getPersona();
-		$cartaOrganica  = $this->getDoctrine()->getRepository( 'AppBundle:Documento' )->findOneBySlug( 'carta-organica' );
+		$cartaOrganica  = $this->getDoctrine()->getRepository( 'AppBundle:Documento' )->findOneBySlug( 'estatuto' );
 
 		if ( $this->get( 'security.authorization_checker' )->isGranted( 'ROLE_CONCEJAL' ) ) {
 

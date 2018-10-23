@@ -140,7 +140,7 @@
                 <div class="titulo">
                     <img class="img-responsive img-logo" :src="logoSrc">
                     <h1>
-                        Honorable Concejo Deliberante de la Ciudad de Posadas
+                        Foro Interparlamentario Municipal Permanente
                     </h1>
                 </div>
             </div>

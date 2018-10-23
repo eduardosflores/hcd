@@ -63,11 +63,11 @@
     </style>
 </head>
 <body>
-<h1 class="text-center">HONORABLE CONCEJO DELIBERANTE</h1>
+<h1 class="text-center">Foro Interparlamentario Municipal Permanente</h1>
 
 <div class="text-center">
     <figure>
-        <img src="{{ absolute_url(asset('apple-touch-icon.png')) }}" alt="HCD Logo" class="logo-hcd">
+        <img src="{{ absolute_url(asset('apple-touch-icon.png')) }}" alt="FIMPer Logo" class="logo-hcd">
     </figure>
 </div>
 <h2 class="text-center">Municipalidad de la Ciudad de Posadas</h2>
@@ -125,7 +125,7 @@
                             {#{{ iniciador.iniciador.cargoPersona.persona.apellido | upper }} .-#}
                         {#{% endfor %}#}
                     {% elseif expediente.iniciadores.count >= 3 %}
-                        CONCEJALES DEL HCD
+                        CONCEJALES DEL FIMPer
                     {% elseif expediente.iniciadorParticular %}
                         {{ (expediente.iniciadorParticular.apellido ~' '~expediente.iniciadorParticular.nombre) | upper }}
                     {% elseif expediente.dependencia %}
