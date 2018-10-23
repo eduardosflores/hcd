@@ -27,6 +27,22 @@ class MocionController extends Controller {
 
 		$sesion = $this->getDoctrine()->getRepository( 'AppBundle:Sesion' )->findQbUltimaSesion()->getQuery()->getSingleResult();
 
+
+		$mocions = $em->getRepository( 'AppBundle:Mocion' )->findByUltimaSesion( $sesion );
+
+		if ( $sesion->getAsuntosEntrados() ) {
+			$estatuto = $this->getDoctrine()->getRepository( 'AppBundle:Documento' )->findOneBySlug( 'estatuto' );
+
+			return $this->render( 'mocion/index.html.twig',
+				array(
+					'mocions'       => $mocions,
+					'sesion'        => $sesion,
+					'cartaOrganica' => $estatuto,
+					'proyectos'     => [],
+					'dictamenes'    => [],
+				) );
+		}
+
 		$bae = $sesion->getBae()->first();
 		$od  = $sesion->getOd()->first();
 
@@ -42,8 +58,6 @@ class MocionController extends Controller {
 			'DICTÁMENES DE RESOLUCIÓN'   => $od->getDictamenesDeResolucion(),
 			'DICTÁMENES DE ORDENANZA'    => $od->getDictamenesDeOrdenanza(),
 		];
-
-		$mocions = $em->getRepository( 'AppBundle:Mocion' )->findByUltimaSesion( $sesion );
 
 		$cartaOrganica = $this->getDoctrine()->getRepository( 'AppBundle:Documento' )->findOneBySlug( 'carta-organica' );
 
@@ -100,6 +114,20 @@ class MocionController extends Controller {
 			$this->addFlash( 'warning', 'La moción Nº ' . $enVotacion . ' no está finalizada' );
 		}
 
+		if ( $sesion->getAsuntosEntrados() ) {
+			$estatuto = $this->getDoctrine()->getRepository( 'AppBundle:Documento' )->findOneBySlug( 'estatuto' );
+
+			return $this->render( 'mocion/new.html.twig',
+				array(
+					'mocion'        => $mocion,
+					'sesion'        => $sesion,
+					'cartaOrganica' => $estatuto,
+					'form'          => $form->createView(),
+					'proyectos'     => [],
+					'dictamenes'    => [],
+				) );
+		}
+
 		$cartaOrganica = $this->getDoctrine()->getRepository( 'AppBundle:Documento' )->findOneBySlug( 'carta-organica' );
 
 		$bae = $sesion->getBae()->first();
@@ -134,10 +162,10 @@ class MocionController extends Controller {
 	 *
 	 */
 	public function showAction( Request $request, Mocion $mocion ) {
-		$deleteForm    = $this->createDeleteForm( $mocion );
-		$sesion        = $this->getDoctrine()->getRepository( 'AppBundle:Sesion' )->findQbUltimaSesion()->getQuery()->getSingleResult();
-		$bae = $sesion->getBae()->first();
-		$od  = $sesion->getOd()->first();
+		$deleteForm = $this->createDeleteForm( $mocion );
+		$sesion     = $this->getDoctrine()->getRepository( 'AppBundle:Sesion' )->findQbUltimaSesion()->getQuery()->getSingleResult();
+		$bae        = $sesion->getBae()->first();
+		$od         = $sesion->getOd()->first();
 
 		$proyectos = [
 			'INFORMES DEL DEPARTAMENTO EJECUTIVO' => $bae->getProyectosDeDEM(),
@@ -145,7 +173,7 @@ class MocionController extends Controller {
 			'PROYECTOS DEL DEFENSOR DEL PUEBLO'   => $bae->getProyectosDeDefensor(),
 		];
 
-		$dictamenes = [
+		$dictamenes    = [
 			'DICTÁMENES DE DECLARACIÓN'  => $od->getDictamenesDeDeclaracion(),
 			'DICTÁMENES DE COMUNICACIÓN' => $od->getDictamenesDeComunicacion(),
 			'DICTÁMENES DE RESOLUCIÓN'   => $od->getDictamenesDeResolucion(),
@@ -200,6 +228,21 @@ class MocionController extends Controller {
 
 		$sesion = $this->getDoctrine()->getRepository( 'AppBundle:Sesion' )->findQbUltimaSesion()->getQuery()->getSingleResult();
 
+		if ( $sesion->getAsuntosEntrados() ) {
+			$estatuto = $this->getDoctrine()->getRepository( 'AppBundle:Documento' )->findOneBySlug( 'estatuto' );
+
+			return $this->render( 'mocion/show.html.twig',
+				array(
+					'mocion'        => $mocion,
+					'sesion'        => $sesion,
+					'cartaOrganica' => $estatuto,
+					'segundos'      => 15,
+					'votar'         => true,
+					'lanzar'        => false,
+					'delete_form'   => $deleteForm->createView(),
+				) );
+		}
+
 		$cartaOrganica = $this->getDoctrine()->getRepository( 'AppBundle:Documento' )->findOneBySlug( 'carta-organica' );
 
 		return $this->render( 'mocion/show.html.twig',
@@ -224,6 +267,23 @@ class MocionController extends Controller {
 		$editForm      = $this->createForm( 'AppBundle\Form\MocionType', $mocion );
 		$editForm->handleRequest( $request );
 		$sesion = $this->getDoctrine()->getRepository( 'AppBundle:Sesion' )->findQbUltimaSesion()->getQuery()->getSingleResult();
+
+
+		if ( $sesion->getAsuntosEntrados() ) {
+			$estatuto = $this->getDoctrine()->getRepository( 'AppBundle:Documento' )->findOneBySlug( 'estatuto' );
+
+			return $this->render( 'mocion/edit.html.twig',
+				array(
+					'sesion'        => $sesion,
+					'mocion'        => $mocion,
+					'cartaOrganica' => $estatuto,
+					'edit_form'     => $editForm->createView(),
+					'delete_form'   => $deleteForm->createView(),
+					'proyectos'     => [],
+					'dictamenes'    => [],
+				) );
+		}
+
 		$bae = $sesion->getBae()->first();
 		$od  = $sesion->getOd()->first();
 
